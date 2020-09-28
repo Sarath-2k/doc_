@@ -1,7 +1,10 @@
+import 'package:doc_/blankdoc.dart';
 import 'package:doc_/drawerpages/bin.dart';
 import 'package:doc_/drawerpages/cloud.dart';
 import 'package:doc_/drawerpages/help_feedback.dart';
+import 'package:doc_/templates.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import 'drawerpages/Shared.dart';
 import 'drawerpages/notifications.dart';
@@ -19,7 +22,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       theme: ThemeData.dark(),
+      darkTheme: ThemeData(
+      ),
       home: Home(),
     );
   }
@@ -36,9 +42,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 5,
-      ),
+      appBar: myAppBar(),
       drawer: Drawer(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -65,11 +69,10 @@ class _HomeState extends State<Home> {
                 "Shared With Me",
               ),
               onTap: () {
-                
                 setState(() {
                   current_page = Shared();
                 });
-                },
+              },
             ),
             //Starred
             ListTile(
@@ -81,7 +84,7 @@ class _HomeState extends State<Home> {
                 setState(() {
                   current_page = Starred();
                 });
-                   },
+              },
             ),
             //Offline Files
             ListTile(
@@ -93,7 +96,7 @@ class _HomeState extends State<Home> {
                 setState(() {
                   current_page = Saved();
                 });
-                   },
+              },
             ),
             //Bin
             ListTile(
@@ -104,7 +107,8 @@ class _HomeState extends State<Home> {
               onTap: () {
                 setState(() {
                   current_page = Bin();
-                });},
+                });
+              },
             ),
             //Notifications
             ListTile(
@@ -115,13 +119,14 @@ class _HomeState extends State<Home> {
               onTap: () {
                 setState(() {
                   current_page = Notifications();
-                });},
+                });
+              },
             ),
             //Divider
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal:15,vertical:10),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Divider(
-                thickness:2,
+                thickness: 2,
               ),
             ),
             //Settings
@@ -134,7 +139,8 @@ class _HomeState extends State<Home> {
                 setState(() {
                   current_page = Settings();
                 });
-            },),
+              },
+            ),
             //Help&Feedback
             ListTile(
               leading: Icon(Icons.help_outline),
@@ -144,7 +150,8 @@ class _HomeState extends State<Home> {
               onTap: () {
                 setState(() {
                   current_page = HelpFeedback();
-                });},
+                });
+              },
             ),
             //Cloud
             ListTile(
@@ -155,12 +162,60 @@ class _HomeState extends State<Home> {
               onTap: () {
                 setState(() {
                   current_page = Cloud();
-                });},
+                });
+              },
             ),
           ],
         ),
       ),
-      body: current_page
+      body: current_page,
+      floatingActionButton: SpeedDial(
+          marginRight: 18,
+          marginBottom: 20,
+          animatedIcon: AnimatedIcons.menu_close,
+          animatedIconTheme: IconThemeData(size: 22.0),
+          visible: true,
+          closeManually: false,
+          curve: Curves.bounceIn,
+          overlayColor: Colors.black,
+          overlayOpacity: 0.5,
+          onOpen: () => print('OPENING DIAL'),
+          onClose: () => print('DIAL CLOSED'),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 8.0,
+          shape: CircleBorder(),
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.edit),
+              backgroundColor: Colors.red,
+              label: "New Document",
+              labelStyle: TextStyle(fontSize:20,fontWeight: FontWeight.w500),
+              labelBackgroundColor: Colors.black45,
+              onTap: () {
+                print("New Document Tapped");
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> BlankDoc()));
+              }
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.description),
+              backgroundColor: Colors.blue,
+              label: "Use a Template",
+              labelStyle: TextStyle(fontSize:20,fontWeight: FontWeight.w500,),
+              labelBackgroundColor: Colors.black45,
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Templates()));},
+            ),
+          ],
+        ),
+    );
+  }
+
+  AppBar myAppBar() {
+    return AppBar(
+      elevation: 5,
+      centerTitle: true,
+      title: Text("Doc"),
     );
   }
 }

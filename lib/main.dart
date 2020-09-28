@@ -31,6 +31,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  Widget current_page = Recent();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +52,9 @@ class _HomeState extends State<Home> {
                 "Recent",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Recent()));
+                setState(() {
+                  current_page = Recent();
+                });
               },
             ),
             // SharedWithMe
@@ -63,9 +64,11 @@ class _HomeState extends State<Home> {
                 "Shared With Me",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Shared()));},
+                
+                setState(() {
+                  current_page = Shared();
+                });
+                },
             ),
             //Starred
             ListTile(
@@ -74,9 +77,10 @@ class _HomeState extends State<Home> {
                 "Starred",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Starred()));},
+                setState(() {
+                  current_page = Starred();
+                });
+                   },
             ),
             //Offline Files
             ListTile(
@@ -85,9 +89,10 @@ class _HomeState extends State<Home> {
                 "Offline Files",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Saved()));},
+                setState(() {
+                  current_page = Saved();
+                });
+                   },
             ),
             //Bin
             ListTile(
@@ -96,9 +101,9 @@ class _HomeState extends State<Home> {
                 "Bin",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Bin()));},
+                setState(() {
+                  current_page = Bin();
+                });},
             ),
             //Notifications
             ListTile(
@@ -107,9 +112,9 @@ class _HomeState extends State<Home> {
                 "Notifications",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Notifications()));},
+                setState(() {
+                  current_page = Notifications();
+                });},
             ),
             //Divider
             Padding(
@@ -125,10 +130,10 @@ class _HomeState extends State<Home> {
                 "Settings",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Settings()));},
-            ),
+                setState(() {
+                  current_page = Settings();
+                });
+            },),
             //Help&Feedback
             ListTile(
               leading: Icon(Icons.help_outline),
@@ -136,9 +141,9 @@ class _HomeState extends State<Home> {
                 "Help & Feedback",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Help_Feedback()));},
+                setState(() {
+                  current_page = Help_Feedback();
+                });},
             ),
             //Cloud
             ListTile(
@@ -147,16 +152,14 @@ class _HomeState extends State<Home> {
                 "Cloud",
               ),
               onTap: () {
-                Navigator.push(
-                  context,
-                   MaterialPageRoute(builder: (context) => Cloud()));},
+                setState(() {
+                  current_page = Cloud();
+                });;},
             ),
           ],
         ),
       ),
-      body: PageView(
-        scrollDirection: Axis.horizontal,
-      ),
+      body: current_page
     );
   }
 }

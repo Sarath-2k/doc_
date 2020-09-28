@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Help_Feedback extends StatelessWidget {
+class HelpFeedback extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

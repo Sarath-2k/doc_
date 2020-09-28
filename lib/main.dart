@@ -31,6 +31,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  // ignore: non_constant_identifier_names
   Widget current_page = Recent();
   @override
   Widget build(BuildContext context) {
@@ -142,7 +143,7 @@ class _HomeState extends State<Home> {
               ),
               onTap: () {
                 setState(() {
-                  current_page = Help_Feedback();
+                  current_page = HelpFeedback();
                 });},
             ),
             //Cloud
@@ -154,7 +155,7 @@ class _HomeState extends State<Home> {
               onTap: () {
                 setState(() {
                   current_page = Cloud();
-                });;},
+                });},
             ),
           ],
         ),

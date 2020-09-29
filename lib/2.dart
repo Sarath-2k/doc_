@@ -1,24 +1,25 @@
-import 'package:doc_/1.dart';
-import 'package:doc_/2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_summernote/flutter_summernote.dart';
 
-class BlankDoc extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+  final String title;
+
   @override
-  _BlankDocState createState() => _BlankDocState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _BlankDocState extends State<BlankDoc> {
+class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<FlutterSummernoteState> _keyEditor = GlobalKey();
   final _scaffoldState = GlobalKey<ScaffoldState>();
   String result = "";
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldState,
       appBar: AppBar(
-        title: Text("Doc"),
+        title: Text(widget.title),
         elevation: 0,
         actions: <Widget>[
           IconButton(
@@ -33,7 +34,7 @@ class _BlankDocState extends State<BlankDoc> {
           )
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
       body: FlutterSummernote(
         hint: "Your text here...",
         key: _keyEditor,

@@ -33,16 +33,19 @@ class _BlankDocState extends State<BlankDoc> {
           )
         ],
       ),
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.blac,
       body: FlutterSummernote(
         hint: "Your text here...",
+        decoration: BoxDecoration(
+          color:Colors.black26,
+        ),
         key: _keyEditor,
-        customToolbar: """
-          [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['font', ['strikethrough', 'superscript', 'subscript']]
-          ]
-        """,
+        // customToolbar: """
+        //   [
+        //     ['style', ['bold', 'italic', 'underline', 'clear']],
+        //     ['font', ['strikethrough', 'superscript', 'subscript']]
+        //   ]
+        // """,
       ),
     );
   }

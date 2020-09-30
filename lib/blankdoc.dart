@@ -1,5 +1,4 @@
-import 'package:doc_/1.dart';
-import 'package:doc_/2.dart';
+import 'package:doc_/fileops.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_summernote/flutter_summernote.dart';
 
@@ -10,9 +9,25 @@ class BlankDoc extends StatefulWidget {
 
 class _BlankDocState extends State<BlankDoc> {
   GlobalKey<FlutterSummernoteState> _keyEditor = GlobalKey();
+
   final _scaffoldState = GlobalKey<ScaffoldState>();
+
   String result = "";
-  
+
+  LocalStorage localStorage = LocalStorage();
+
+  String doc_name = "Unknown";
+
+  TextEditingController savedialogue;
+
+  var _value;
+  @override
+  void initState() {
+    // TODO: implement initState
+    savedialogue = new TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,28 +39,67 @@ class _BlankDocState extends State<BlankDoc> {
           IconButton(
             icon: Icon(Icons.save),
             onPressed: () async {
-              final value = await _keyEditor.currentState.getText();
-              _scaffoldState.currentState.showSnackBar(SnackBar(
-                duration: Duration(seconds: 5),
-                content: Text(value),
-              ));
+              if (doc_name == "Unknown") {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Text("Give name to your file"),
+                        content: TextField(
+                          decoration:
+                              new InputDecoration(hintText: "Update Info"),
+                          controller: savedialogue,
+                        ),
+                        actions: <Widget>[
+                          //cancel
+                          FlatButton(
+                            child: Text("Cancel"),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          //save
+                          FlatButton(
+                              child: Text("Save"),
+                              onPressed: () {
+                                setState(() async {
+                                  doc_name = savedialogue.text;
+                                  final value =
+                                      await _keyEditor.currentState.getText();
+                                  _scaffoldState.currentState
+                                      .showSnackBar(SnackBar(
+                                    duration: Duration(seconds: 5),
+                                    content: Text(value),
+                                  ));
+                                  _value = value;
+                                  localStorage.filename = doc_name;
+                                  localStorage.writetoFile(_value);
+                                });
+                                Navigator.pop(context);
+                              })
+                        ],
+                      );
+                    });
+              } else {
+                final value = await _keyEditor.currentState.getText();
+                _scaffoldState.currentState.showSnackBar(SnackBar(
+                  duration: Duration(seconds: 5),
+                  content: Text("value"),
+                ));
+                _value = value;
+                localStorage.filename = doc_name;
+                localStorage.writetoFile(_value);
+              }
             },
           )
         ],
       ),
-      // backgroundColor: Colors.blac,
       body: FlutterSummernote(
         hint: "Your text here...",
         decoration: BoxDecoration(
-          color:Colors.black26,
+          color: Colors.black26,
         ),
         key: _keyEditor,
-        // customToolbar: """
-        //   [
-        //     ['style', ['bold', 'italic', 'underline', 'clear']],
-        //     ['font', ['strikethrough', 'superscript', 'subscript']]
-        //   ]
-        // """,
       ),
     );
   }
